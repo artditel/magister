@@ -1,5 +1,5 @@
 #!/bin/bash -e
-for x in $(find | grep \.json);
+for x in $(find . | grep \.json);
 do
     y=$(basename $x .json);
     z=$(dirname $x);

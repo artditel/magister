@@ -1,0 +1,173 @@
+\documentclass[svgnames,table]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+%\usepackage[table]{xcolor}
+\usetheme{Darmstadt}
+\usecolortheme{seahorse}
+\usefonttheme{serif}
+
+
+\title % (optional, only for long titles)
+{Хроматические числа графов расстояний}
+\subtitle{Дипломная работа}
+\institute[МФТИ] % (optional)
+{
+Московский физико-технический институт
+}
+\date[2013] % (optional)
+{2013}
+\subject{Дискретная математика}
+
+\newcommand\GTH{T_H(n,k,t)}
+\newcommand\GB{B(n,k,t)}
+\newcommand\GT{T(n,k_{-1},k_1,k_0,t)}
+\newcommand\Rn{\chi(\mathbb R^n)}
+\setbeamerfont{title}{family=\rm}
+
+\newtheorem{proposition}{Теорема}
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}
+    \frametitle{Определения}
+    \begin{itemize}
+    \item\emph{Дистанционный граф} в $\mathbb R^n$ --- любой граф,
+    у которого $V \in \mathbb R^n, E=\{\{x,y\}: |x-y|=a\}$ с некоторым $a > 0$.
+
+    \item\emph{Хроматическое число} графа $\chi(G)$---
+    минимальное число цветов для покраски вершин,
+    при которой концы ребер имеют разные цвета.
+
+    \item\emph{Хроматическое число пространства} $\mathbb R^n$ ---
+    это хроматическое число дистанционного графа с $V=\mathbb R^n$
+
+    \item\emph{Число независимости графа} $\alpha(G)$---
+    максимальный размер подмножества вершин, не содержащего ребер
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Постановка задачи}
+\framesubtitle{Проблема Нелсона—Эрдеша—Хадвигера}
+    \begin{itemize}
+    \item Нужно найти $\Rn$, или хотя бы оценить.
+    \item На данный момент
+        $(1.239\dots o(1))^n \leq \Rn \leq (3+ o(1))^n$
+    \item Для любого дистанционного графа $G$ из $\mathbb R^n$ верно:
+        $$\Rn \geq \chi(G) \geq \frac{|V|}{\alpha(G)}$$
+    \item Будем искать нижнюю оценку в малых размерностях.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Известные результаты}
+    \begin{table}\centering
+        \caption{Нижняя оценка $\Rn$ в малых размерностях}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        n &         1 & 2 & 3 & 4 & 5 & 6 &
+        7 & 8 & 9 & 10 & 11 & 12 \\ \hline
+        $\chi \geq$ & 2 & 4 & 6 & 7 & 9 & 11 &
+         15 & 16 & 21 & 23 & 23 & 24 \\ \hline
+    \end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Рассматриваемые графы}
+    \begin{itemize}
+        \item $\GB$: вершины --- это $\{0,1\}$-вектора с $k$ единицами,
+            $\{u,v\}$--- ребро, если $(u,v)=t$.
+        \item $\GTH$: вершины --- это $\{-1,0,1\}$-вектора с $k$ ненулевыми
+            элементами, $\{u,v\}$--- ребро, если $(u,v)=t$. Считаем, что 1
+            идет первой.
+        \item $\GT$: похож на $\GTH$, но количество ''$-1$'' фиксировано.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Применяемые методы}
+    \framesubtitle{Жадная прикидка}
+        Будем брать вершины в случайном порядке и добавлять в множество
+            независимости. Повторять много раз.
+            \input{data/predict/b/10}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Применяемые методы}
+    \framesubtitle{Полный перебор}
+        \begin{itemize}
+            \item Перебор с отсечениями.
+            \item Докажем, что множество, в котором нет пары таких вершин,
+                что $(u,v)=s$ --- не максимальное.
+            \item Возмьем две такие веришны и добавим их в множество,
+                удалив из графа всех соседей.
+            \item Теперь в графе намного меньше вершин.
+        \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Полный перебор}
+    \framesubtitle{Результаты}
+        \begin{itemize}
+            \item Граф $B(n,5,3), n=11,12$, время проверки --- несколько часов.
+            \item Так как граф на гиперсфере, то мы можем понизить его размерность.
+        \end{itemize}
+    \begin{eqnarray}
+        \chi(\mathbb R^{10}) &\geq& \chi(B(11,5,3)) \geq  26 \textrm{ (было 23)},\\\
+        \chi(\mathbb R^{11}) &\geq& \chi(B(12,5,3)) \geq  32 \textrm{ (было 23)},\\
+        \chi(\mathbb R^{12}) &\geq& \chi(B(12,5,3)) \geq  32 \textrm{ (было 24)}.
+    \end{eqnarray}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Применяемые методы}
+    \framesubtitle{Собственные значения}
+    \begin{proposition}
+        Если $G$~--- регулярный граф с $n$ вершинами
+        и степенью $k$, а $\lambda_n$~--- минимальное собственное значение
+        его матрицы смежности, то
+        \begin{equation}
+            \alpha(G) \leq n\frac{-\lambda_n}{k-\lambda_n}.
+        \end{equation}
+    \end{proposition}
+    Применим метод Ланцоша для нахождения собственного значения.
+    Сложность алгоритма --- $\mathcal O(r|V|^2)$, все упирается в умножение
+    матрицы на столбец.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Собственные значения}
+    \framesubtitle{Результаты}
+    \begin{itemize}
+        \item В другой статье был рассмотрен граф $T_H(n,n/2,0)$, и для него
+            применен подобный метод. Точные значения получены для $ n \leq 10$
+            и приблизительные для $n=12,14$
+        \item Для $n=16$ граф с 1 647 360 вершинами,
+           для $n=14$ --- лишь 219 648 вершин.  Матрица смежности заняла 150Gb,
+           значение вычислялось 2 недели, год процесорного времени. Методу Ланцоша понадобилось 47 итераций.
+    \end{itemize}
+    \begin{table}[h]
+        \centering
+        \caption{Оценка $\chi(G(n,\lceil n/2\rceil,0))$ с помощью $\lambda_{min}$}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    $n$ &           8  & 9   & 10 & 11   & 12  & 13 & 14 & 16 \\ \hline
+    $\chi \geq$   & 7  & 9   &  9 & 11   & 11  & 13 & 13 & 15 \\ \hline
+    $\alpha \leq$ & 78 & 227 &465 & 1428 &2563 & 8903 & 16471 & 106744 \\ \hline
+    \end{tabular}
+    \end{table}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Конец}
+    \begin{center}
+    Спасибо за внимание.
+    \end{center}
+
+\end{frame}
+
+\end{document}
