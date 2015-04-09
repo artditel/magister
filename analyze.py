@@ -3,6 +3,7 @@
 import os
 import json
 
+# test
 def run_method(method, graph, n, k, t, iters="", kpos=""):
     if k < t: return None
     cmd = "methods/{0} {1} {2} {3} {4}".format(
